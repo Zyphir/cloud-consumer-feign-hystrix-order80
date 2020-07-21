@@ -1,0 +1,31 @@
+server:
+  port: 80
+
+eureka:
+  instance:
+    hostname: eureka7001.com #eureka服务端实例名称
+  client:
+    register-with-eureka: false #表示不向注册中心注册自己
+#    fetch-registry: false #false表示自己就是注册中心，我的职责就是维护服务实例,并不区检索服务
+    service-url:
+      #      defaultZone: http://eureka7002.com:7002/eureka/ #集群模式 相互守望
+      defaultZone: http://eureka7001.com:7001/eureka/ #单机模式
+
+feign:
+  hystrix:
+    enabled: true
+#
+#
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+ribbon:
+  ReadTimeout: 8000  #请求处理的超时时间
+  ConnectTimeout: 8000 #请求连接超时时间
+  MaxAutoRetries: 0 #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 1 #切换实例的重试次数 1
